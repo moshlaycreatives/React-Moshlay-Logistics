@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Nationwide Transport Services">
+  <rect width="64" height="64" rx="12" fill="#0c1c2c"/>
+  <g transform="translate(8,20) scale(0.42)" fill="#f5a623">
+    <rect x="38" y="6" width="70" height="34" rx="3"/>
+    <path d="M2 18 h18 l10 8 v14 h-28 z"/>
+    <circle cx="14" cy="46" r="7"/>
+    <circle cx="74" cy="46" r="7"/>
+    <circle cx="92" cy="46" r="7"/>
+  </g>
+</svg>

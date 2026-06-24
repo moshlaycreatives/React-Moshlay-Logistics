@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 500" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Always Moving"><defs>
+      <linearGradient id="bg_4180" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#0a1622"/><stop offset="1" stop-color="#1b3a52"/></linearGradient>
+      <radialGradient id="gl_4180" cx="80%" cy="30%" r="60%">
+        <stop offset="0" stop-color="#f5a623" stop-opacity="0.3"/><stop offset="1" stop-color="#f5a623" stop-opacity="0"/></radialGradient>
+      <pattern id="d_4180" width="22" height="22" patternUnits="userSpaceOnUse">
+        <circle cx="2" cy="2" r="1.2" fill="#fff" opacity="0.05"/></pattern></defs><rect width="1400" height="500" fill="url(#bg_4180)"/><rect width="1400" height="500" fill="url(#d_4180)"/><rect width="1400" height="500" fill="url(#gl_4180)"/><rect x="0" y="360.0" width="1400" height="140.0" fill="#0a1622" opacity="0.55"/><rect x="0" y="360.0" width="1400" height="3" fill="#f5a623" opacity="0.7"/><rect x="0.0" y="428.0" width="46.66666666666667" height="4" fill="#f5a623" opacity="0.4"/><rect x="116.66666666666667" y="428.0" width="46.66666666666667" height="4" fill="#f5a623" opacity="0.4"/><rect x="233.33333333333334" y="428.0" width="46.66666666666667" height="4" fill="#f5a623" opacity="0.4"/><rect x="350.0" y="428.0" width="46.66666666666667" height="4" fill="#f5a623" opacity="0.4"/><rect x="466.6666666666667" y="428.0" width="46.66666666666667" height="4" fill="#f5a623" opacity="0.4"/><rect x="583.3333333333334" y="428.0" width="46.66666666666667" height="4" fill="#f5a623" opacity="0.4"/><rect x="700.0" y="428.0" width="46.66666666666667" height="4" fill="#f5a623" opacity="0.4"/><rect x="816.6666666666667" y="428.0" width="46.66666666666667" height="4" fill="#f5a623" opacity="0.4"/><rect x="933.3333333333334" y="428.0" width="46.66666666666667" height="4" fill="#f5a623" opacity="0.4"/><rect x="1050.0" y="428.0" width="46.66666666666667" height="4" fill="#f5a623" opacity="0.4"/><rect x="1166.6666666666667" y="428.0" width="46.66666666666667" height="4" fill="#f5a623" opacity="0.4"/><rect x="1283.3333333333335" y="428.0" width="46.66666666666667" height="4" fill="#f5a623" opacity="0.4"/><rect x="1400.0" y="428.0" width="46.66666666666667" height="4" fill="#f5a623" opacity="0.4"/><g transform="translate(168.0,78.33333333333331) scale(5.416666666666667)" fill="#f5a623" opacity="0.94">
+      <rect x="38" y="6" width="74" height="34" rx="3"/>
+      <path d="M2 18 h18 l12 8 v14 h-30 z"/>
+      <rect x="6" y="22" width="11" height="9" rx="1" fill="#0a1622" opacity="0.5"/>
+      <circle cx="15" cy="46" r="7"/><circle cx="78" cy="46" r="7"/><circle cx="96" cy="46" r="7"/>
+    </g><g transform="translate(22,22)">
+      <rect width="144.4" height="32" rx="7" fill="#0a1622" opacity="0.65"/>
+      <rect width="5" height="32" rx="2" fill="#f5a623"/>
+      <text x="18" y="21" font-family="Oswald,sans-serif" font-size="13" letter-spacing="1.6" fill="#e9eef3">ALWAYS MOVING</text></g></svg>

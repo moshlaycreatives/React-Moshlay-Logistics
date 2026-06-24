@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 700" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Coast to Coast"><defs>
+      <linearGradient id="bg_8980" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#0a1622"/><stop offset="1" stop-color="#1b3a52"/></linearGradient>
+      <radialGradient id="gl_8980" cx="80%" cy="30%" r="60%">
+        <stop offset="0" stop-color="#f5a623" stop-opacity="0.3"/><stop offset="1" stop-color="#f5a623" stop-opacity="0"/></radialGradient>
+      <pattern id="d_8980" width="22" height="22" patternUnits="userSpaceOnUse">
+        <circle cx="2" cy="2" r="1.2" fill="#fff" opacity="0.05"/></pattern></defs><rect width="900" height="700" fill="url(#bg_8980)"/><rect width="900" height="700" fill="url(#d_8980)"/><rect width="900" height="700" fill="url(#gl_8980)"/><rect x="0" y="504.0" width="900" height="196.0" fill="#0a1622" opacity="0.55"/><rect x="0" y="504.0" width="900" height="3" fill="#f5a623" opacity="0.7"/><rect x="0.0" y="600.0" width="30.0" height="4" fill="#f5a623" opacity="0.4"/><rect x="75.0" y="600.0" width="30.0" height="4" fill="#f5a623" opacity="0.4"/><rect x="150.0" y="600.0" width="30.0" height="4" fill="#f5a623" opacity="0.4"/><rect x="225.0" y="600.0" width="30.0" height="4" fill="#f5a623" opacity="0.4"/><rect x="300.0" y="600.0" width="30.0" height="4" fill="#f5a623" opacity="0.4"/><rect x="375.0" y="600.0" width="30.0" height="4" fill="#f5a623" opacity="0.4"/><rect x="450.0" y="600.0" width="30.0" height="4" fill="#f5a623" opacity="0.4"/><rect x="525.0" y="600.0" width="30.0" height="4" fill="#f5a623" opacity="0.4"/><rect x="600.0" y="600.0" width="30.0" height="4" fill="#f5a623" opacity="0.4"/><rect x="675.0" y="600.0" width="30.0" height="4" fill="#f5a623" opacity="0.4"/><rect x="750.0" y="600.0" width="30.0" height="4" fill="#f5a623" opacity="0.4"/><rect x="825.0" y="600.0" width="30.0" height="4" fill="#f5a623" opacity="0.4"/><rect x="900.0" y="600.0" width="30.0" height="4" fill="#f5a623" opacity="0.4"/><g transform="translate(108.0,109.66666666666669) scale(7.583333333333333)" fill="#f5a623" opacity="0.94">
+      <rect x="38" y="6" width="74" height="34" rx="3"/>
+      <path d="M2 18 h18 l12 8 v14 h-30 z"/>
+      <rect x="6" y="22" width="11" height="9" rx="1" fill="#0a1622" opacity="0.5"/>
+      <circle cx="15" cy="46" r="7"/><circle cx="78" cy="46" r="7"/><circle cx="96" cy="46" r="7"/>
+    </g><g transform="translate(22,22)">
+      <rect width="153.20000000000002" height="32" rx="7" fill="#0a1622" opacity="0.65"/>
+      <rect width="5" height="32" rx="2" fill="#f5a623"/>
+      <text x="18" y="21" font-family="Oswald,sans-serif" font-size="13" letter-spacing="1.6" fill="#e9eef3">COAST TO COAST</text></g></svg>
