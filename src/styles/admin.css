@@ -513,6 +513,13 @@
   background: var(--paper);
 }
 
+.admin-card__media-link {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
 .admin-card__media img {
   width: 100%;
   height: 100%;

@@ -1,27 +1,28 @@
 import { createContext, useContext, useState, useCallback } from "react";
 
 const AUTH_KEY = "nts_admin_auth";
-const ADMIN_USER = "admin";
-const ADMIN_PASS = "nts@2024";
+const TOKEN_KEY = "nts_admin_token";
 
 const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
   const [isAuthenticated, setIsAuthenticated] = useState(
-    () => sessionStorage.getItem(AUTH_KEY) === "true"
+    () =>
+      localStorage.getItem(AUTH_KEY) === "true" ||
+      !!localStorage.getItem(TOKEN_KEY)
   );
 
-  const login = useCallback((username, password) => {
-    if (username === ADMIN_USER && password === ADMIN_PASS) {
-      sessionStorage.setItem(AUTH_KEY, "true");
-      setIsAuthenticated(true);
-      return { ok: true };
+  const login = useCallback((token) => {
+    localStorage.setItem(AUTH_KEY, "true");
+    if (token) {
+      localStorage.setItem(TOKEN_KEY, token);
     }
-    return { ok: false, error: "Invalid username or password." };
+    setIsAuthenticated(true);
   }, []);
 
   const logout = useCallback(() => {
-    sessionStorage.removeItem(AUTH_KEY);
+    localStorage.removeItem(AUTH_KEY);
+    localStorage.removeItem(TOKEN_KEY);
     setIsAuthenticated(false);
   }, []);
 

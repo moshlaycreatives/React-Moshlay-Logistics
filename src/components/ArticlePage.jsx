@@ -5,9 +5,16 @@ import LinkedInBanner from "./LinkedInBanner";
 import { usePageTitle } from "../hooks/usePageTitle";
 import { resolveImageSrc } from "../utils/imageUpload";
 
-export default function ArticlePage({ articles, basePath, backLabel, backTo }) {
+export default function ArticlePage({
+  articles,
+  article: providedArticle,
+  basePath,
+  backLabel,
+  backTo,
+  showPlaceholder = true,
+}) {
   const { slug } = useParams();
-  const article = articles.find((a) => a.slug === slug);
+  const article = providedArticle ?? articles?.find((a) => a.slug === slug);
 
   usePageTitle(
     article ? `${article.title} | Nationwide Transport Services` : "Article",
@@ -16,8 +23,12 @@ export default function ArticlePage({ articles, basePath, backLabel, backTo }) {
 
   if (!article) return <Navigate to={backTo} replace />;
 
-  const prevTo = article.prevLink ? `${basePath}/${article.prevLink.slug}` : null;
-  const nextTo = article.nextLink ? `${basePath}/${article.nextLink.slug}` : null;
+  const prevTo = article.prevLink
+    ? `${basePath}/${article.prevLink.id ?? article.prevLink.slug}`
+    : null;
+  const nextTo = article.nextLink
+    ? `${basePath}/${article.nextLink.id ?? article.nextLink.slug}`
+    : null;
 
   return (
     <>
@@ -28,14 +39,20 @@ export default function ArticlePage({ articles, basePath, backLabel, backTo }) {
           </Link>
           <p className="article__meta" style={{ marginTop: 18 }}>{article.meta}</p>
           <h1>{article.title}</h1>
-          <img className="article__hero" src={resolveImageSrc(article.image)} alt={article.title} />
+          <img
+            className="article__hero"
+            src={article.image?.startsWith("http") ? article.image : resolveImageSrc(article.image)}
+            alt={article.title}
+          />
           <div className="article__body">
             {article.paragraphs.map((p, i) => (
               <p key={i}>{p}</p>
             ))}
-            <p style={{ color: "var(--muted)", fontSize: ".92rem", marginTop: 28 }}>
-              <em>This article content is placeholder text and can be replaced with your final copy.</em>
-            </p>
+            {showPlaceholder && (
+              <p style={{ color: "var(--muted)", fontSize: ".92rem", marginTop: 28 }}>
+                <em>This article content is placeholder text and can be replaced with your final copy.</em>
+              </p>
+            )}
           </div>
           <div style={{ marginTop: 34, display: "flex", gap: 12, flexWrap: "wrap" }}>
             {prevTo && (

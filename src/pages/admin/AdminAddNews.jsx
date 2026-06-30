@@ -1,10 +1,41 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useContent } from "../../context/ContentContext";
+import axios from "axios";
 import ImageUploadField from "../../components/admin/ImageUploadField";
+import { endpoints } from "../../endpoint";
+
+function getAuthHeaders() {
+  const token = localStorage.getItem("nts_admin_token");
+  return token ? { Authorization: `Bearer ${token}` } : {};
+}
+
+function dataUrlToFile(dataUrl, filename = "cover") {
+  const [header, base64] = dataUrl.split(",");
+  const mime = header.match(/:(.*?);/)?.[1] || "image/jpeg";
+  const binary = atob(base64);
+  const bytes = new Uint8Array(binary.length);
+  for (let i = 0; i < binary.length; i++) {
+    bytes[i] = binary.charCodeAt(i);
+  }
+  const ext = mime.split("/")[1] || "jpg";
+  return new File([bytes], `${filename}.${ext}`, { type: mime });
+}
+
+function buildNewsFormData(form) {
+  const formData = new FormData();
+  formData.append("title", form.title.trim());
+  formData.append("description", form.description.trim());
+  formData.append("meta", form.meta.trim());
+  formData.append("content", form.content);
+
+  if (form.image) {
+    formData.append("image", dataUrlToFile(form.image));
+  }
+
+  return formData;
+}
 
 export default function AdminAddNews() {
-  const { addNews } = useContent();
   const navigate = useNavigate();
   const [form, setForm] = useState({
     title: "",
@@ -14,20 +45,37 @@ export default function AdminAddNews() {
     content: "",
   });
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   function update(field) {
     return (e) => setForm((prev) => ({ ...prev, [field]: e.target.value }));
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
     if (!form.image) {
       setError("Please upload an image for this news post.");
       return;
     }
     setError("");
-    addNews(form);
-    navigate("/admin/news");
+    setLoading(true);
+
+    try {
+      const payload = buildNewsFormData(form);
+
+      await axios.post(endpoints.NewsApi, payload, {
+        headers: getAuthHeaders(),
+      });
+      navigate("/admin/news");
+    } catch (err) {
+      setError(
+        err.response?.data?.message ||
+          err.response?.data?.error ||
+          "Failed to publish news."
+      );
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -71,8 +119,6 @@ export default function AdminAddNews() {
               />
             </div>
 
-        
-
             <div className="image-upload-wrapper">
               <ImageUploadField
                 id="news-image"
@@ -82,7 +128,6 @@ export default function AdminAddNews() {
                 fallback="news-1.svg"
               />
             </div>
-
 
             <div className="admin-form__group">
               <label htmlFor="content">Full Content *</label>
@@ -96,14 +141,17 @@ export default function AdminAddNews() {
             </div>
 
             <div className="admin-form-page__actions">
-              <button type="submit" className="admin-btn admin-btn--primary admin-btn--block-sm">
-                Publish News
+              <button
+                type="submit"
+                className="admin-btn admin-btn--primary admin-btn--block-sm"
+                disabled={loading}
+              >
+                {loading ? "Publishing..." : "Publish News"}
               </button>
               <Link to="/admin/news" className="admin-btn admin-btn--ghost admin-btn--block-sm">
                 Cancel
               </Link>
             </div>
-
           </form>
         </div>
       </div>

@@ -1,20 +1,45 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import { usePageTitle } from "../hooks/usePageTitle";
 import { Link } from "react-router-dom";
-import DemoForm from "../components/DemoForm";
 import LinkedInBanner from "../components/LinkedInBanner";
-import { useContent } from "../context/ContentContext";
-import { resolveImageSrc } from "../utils/imageUpload";
-
-const CATEGORIES = ["all", "Equipment", "Guides", "Heavy Haul", "Industry", "Mobile Housing"];
+import { endpoints } from "../endpoint";
+import { normalizeArticleList } from "../utils/articleApi";
 
 export default function KnowledgeBase() {
   usePageTitle("Knowledge Base | Nationwide Transport Services", "Guides, tips and resources on freight shipping, heavy haul, trailers, insurance and more from the experts at Nationwide Transport Services.");
 
-  const { kbList } = useContent();
+  const [articles, setArticles] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
   const [filter, setFilter] = useState("all");
-  const featured = kbList.slice(0, 3);
-  const filtered = kbList.filter(
+
+  useEffect(() => {
+    async function fetchArticles() {
+      try {
+        const { data } = await axios.get(endpoints.WebArticleApi);
+        setArticles(normalizeArticleList(data));
+      } catch (err) {
+        setError(
+          err.response?.data?.message ||
+            err.response?.data?.error ||
+            "Failed to load articles."
+        );
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchArticles();
+  }, []);
+
+  const featured = articles.filter((item) => item.isFeatured);
+  const regularArticles = articles.filter((item) => !item.isFeatured);
+  const categories = [
+    "all",
+    ...new Set(regularArticles.map((item) => item.category).filter(Boolean)),
+  ];
+  const filtered = regularArticles.filter(
     (item) => filter === "all" || item.category === filter
   );
 
@@ -35,17 +60,26 @@ export default function KnowledgeBase() {
             <h2 className="h-xl" style={{ color: "var(--navy-800)" }}>Featured Articles</h2>
           </div>
           <div className="post-grid">
-            {featured.map((item) => (
-              <Link key={item.slug} className="post reveal" to={`/knowledge-base/${item.slug}`}>
-                <div className="post__media"><img src={resolveImageSrc(item.image, "kb-1.svg")} alt={item.title} /></div>
-                <div className="post__body">
-                  <p className="post__meta">{item.meta}</p>
-                  <h3>{item.title}</h3>
-                  <p>{item.excerpt}</p>
-                  <span className="post__more">Read More <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg></span>
-                </div>
-              </Link>
-            ))}
+            {error && (
+              <p style={{ color: "var(--red, #c00)", gridColumn: "1 / -1" }}>{error}</p>
+            )}
+            {loading ? (
+              <p style={{ gridColumn: "1 / -1" }}>Loading articles...</p>
+            ) : featured.length === 0 && !error ? (
+              <p style={{ gridColumn: "1 / -1" }}>No featured articles yet.</p>
+            ) : (
+              featured.map((item) => (
+                <Link key={item.id ?? item.slug} className="post reveal" to={`/knowledge-base/${item.id}`}>
+                  <div className="post__media"><img src={item.image || "/images/kb-1.svg"} alt={item.title} draggable="false" /></div>
+                  <div className="post__body">
+                    <p className="post__meta">{item.meta}</p>
+                    <h3>{item.title}</h3>
+                    <p>{item.excerpt}</p>
+                    <span className="post__more">Read More <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg></span>
+                  </div>
+                </Link>
+              ))
+            )}
           </div>
         </div>
       </section>
@@ -67,7 +101,7 @@ export default function KnowledgeBase() {
             <div className="kb-select">
               <label htmlFor="catfilter" style={{ fontFamily: "var(--display)", textTransform: "uppercase", letterSpacing: ".1em", fontSize: ".74rem", color: "var(--muted)" }}>Filter</label>
               <select id="catfilter" value={filter} onChange={(e) => setFilter(e.target.value)}>
-                {CATEGORIES.map((cat) => (
+                {categories.map((cat) => (
                   <option key={cat} value={cat}>
                     {cat === "all" ? "All Categories" : cat}
                   </option>
@@ -76,24 +110,30 @@ export default function KnowledgeBase() {
             </div>
           </div>
           <div className="post-grid" id="kbgrid">
-            {filtered.map((item) => (
-              <Link
-                key={item.slug}
-                className="post reveal"
-                to={`/knowledge-base/${item.slug}`}
-                data-cat={item.category}
-              >
-                <div className="post__media"><img src={resolveImageSrc(item.image, "kb-1.svg")} alt={item.title} /></div>
-                <div className="post__body">
-                  <p className="post__meta">{item.meta}</p>
-                  <h3>{item.title}</h3>
-                  <p>{item.excerpt}</p>
-                  <span className="post__more">Read More <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg></span>
-                </div>
-              </Link>
-            ))}
+            {loading ? (
+              <p style={{ gridColumn: "1 / -1" }}>Loading articles...</p>
+            ) : filtered.length === 0 && !error ? (
+              <p style={{ gridColumn: "1 / -1" }}>No articles found.</p>
+            ) : (
+              filtered.map((item) => (
+                <Link
+                  key={item.id ?? item.slug}
+                  className="post reveal"
+                  to={`/knowledge-base/${item.id}`}
+                  data-cat={item.category}
+                >
+                  <div className="post__media"><img src={item.image || "/images/kb-1.svg"} alt={item.title} draggable="false" /></div>
+                  <div className="post__body">
+                    <p className="post__meta">{item.meta}</p>
+                    <h3>{item.title}</h3>
+                    <p>{item.excerpt}</p>
+                    <span className="post__more">Read More <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg></span>
+                  </div>
+                </Link>
+              ))
+            )}
           </div>
-          {kbList.length > 12 && (
+          {regularArticles.length > 12 && (
             <nav className="pager" aria-label="Pagination"><span className="is-current">1</span><a href="#">2</a><a href="#">Next »</a></nav>
           )}
         </div>

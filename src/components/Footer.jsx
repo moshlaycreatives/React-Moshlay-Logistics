@@ -83,7 +83,7 @@ export default function Footer() {
             <p>Logistics Moshlay Creatives helps businesses transport equipment, vehicles, and cargo safely and on time. We offer professional dispatch support, reliable transporters and smooth coordination from start to finish.</p>
             <div className="footer-social">
               <a href="#" aria-label="Facebook"><Icon name="facebook" /></a>
-              <a href="#" aria-label="Instagram"><Icon name="instagram" /></a>
+              <a href="https://www.instagram.com/moshlaylogistics/" target="_blank" aria-label="Instagram"><Icon name="instagram" /></a>
               <a href="#" aria-label="LinkedIn"><Icon name="linkedin" /></a>
             </div>
           </div>

@@ -15,8 +15,10 @@ import AdminLogin from "./pages/admin/AdminLogin";
 import AdminLayout from "./pages/admin/AdminLayout";
 import AdminNewsList from "./pages/admin/AdminNewsList";
 import AdminAddNews from "./pages/admin/AdminAddNews";
+import AdminEditNews from "./pages/admin/AdminEditNews";
 import AdminArticlesList from "./pages/admin/AdminArticlesList";
 import AdminAddArticle from "./pages/admin/AdminAddArticle";
+import AdminEditArticle from "./pages/admin/AdminEditArticle";
 
 export default function App() {
   return (
@@ -28,9 +30,9 @@ export default function App() {
         <Route path="contact" element={<Contact />} />
         <Route path="become-a-customer" element={<BecomeACustomer />} />
         <Route path="news" element={<News />} />
-        <Route path="news/:slug" element={<NewsArticlePage />} />
+        <Route path="news/:id" element={<NewsArticlePage />} />
         <Route path="knowledge-base" element={<KnowledgeBase />} />
-        <Route path="knowledge-base/:slug" element={<KbArticlePage />} />
+        <Route path="knowledge-base/:id" element={<KbArticlePage />} />
       </Route>
 
       <Route path="admin/login" element={<AdminLogin />} />
@@ -45,8 +47,10 @@ export default function App() {
         <Route index element={<Navigate to="news" replace />} />
         <Route path="news" element={<AdminNewsList />} />
         <Route path="news/new" element={<AdminAddNews />} />
+        <Route path="news/:id/edit" element={<AdminEditNews />} />
         <Route path="articles" element={<AdminArticlesList />} />
         <Route path="articles/new" element={<AdminAddArticle />} />
+        <Route path="articles/:id/edit" element={<AdminEditArticle />} />
       </Route>
     </Routes>
   );

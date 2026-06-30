@@ -1,11 +1,9 @@
 import { useState } from "react";
+import axios from "axios";
 import { Navigate, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import "../../styles/admin.css";
 import { endpoints } from "../../endpoint";
-
-
-
 
 export default function AdminLogin() {
   const { isAuthenticated, login } = useAuth();
@@ -14,6 +12,7 @@ export default function AdminLogin() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   if (isAuthenticated) {
     return <Navigate to="/admin/news" replace />;
@@ -21,14 +20,29 @@ export default function AdminLogin() {
 
   const from = location.state?.from?.pathname || "/admin/news";
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
     setError("");
-    const result = login(username, password);
-    if (result.ok) {
+    setLoading(true);
+
+    try {
+      const { data } = await axios.post(endpoints.LoginApi, {
+        username,
+        password,
+      });
+
+      const token =
+        data?.token || data?.access_token || data?.data?.token || null;
+      login(token);
       navigate(from, { replace: true });
-    } else {
-      setError(result.error);
+    } catch (err) {
+      const message =
+        err.response?.data?.message ||
+        err.response?.data?.error ||
+        "Invalid username or password.";
+      setError(message);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -36,7 +50,7 @@ export default function AdminLogin() {
     <div className="admin admin-login">
       <div className="admin-login__card">
         <div className="admin-login__brand">
-          <h1>NTS Admin</h1>
+          <h1>Logistics Admin</h1>
           <p>Sign in to manage news &amp; articles</p>
         </div>
 
@@ -67,8 +81,12 @@ export default function AdminLogin() {
             />
           </div>
 
-          <button type="submit" className="admin-btn admin-btn--primary admin-btn--block">
-            Sign In
+          <button
+            type="submit"
+            className="admin-btn admin-btn--primary admin-btn--block"
+            disabled={loading}
+          >
+            {loading ? "Signing in..." : "Sign In"}
           </button>
         </form>
       </div>
