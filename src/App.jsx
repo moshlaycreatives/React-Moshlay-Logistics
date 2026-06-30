@@ -19,6 +19,8 @@ import AdminEditNews from "./pages/admin/AdminEditNews";
 import AdminArticlesList from "./pages/admin/AdminArticlesList";
 import AdminAddArticle from "./pages/admin/AdminAddArticle";
 import AdminEditArticle from "./pages/admin/AdminEditArticle";
+import AdminCustomersList from "./pages/admin/AdminCustomersList";
+import AdminQuotesList from "./pages/admin/AdminQuotesList";
 
 export default function App() {
   return (
@@ -51,6 +53,8 @@ export default function App() {
         <Route path="articles" element={<AdminArticlesList />} />
         <Route path="articles/new" element={<AdminAddArticle />} />
         <Route path="articles/:id/edit" element={<AdminEditArticle />} />
+        <Route path="customers" element={<AdminCustomersList />} />
+        <Route path="quotes" element={<AdminQuotesList />} />
       </Route>
     </Routes>
   );

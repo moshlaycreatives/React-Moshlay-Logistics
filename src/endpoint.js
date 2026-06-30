@@ -1,8 +1,8 @@
 
 
-export const BASE_URL = "http://192.168.18.158:8000/api"
+// export const BASE_URL = "http://192.168.18.158:8000/api"
 
-// export const BASE_URL = "https://logisticsbackend.moshlaycreatives.com/api"
+export const BASE_URL = "https://logisticsbackend.moshlaycreatives.com/api"
 
 
 export const endpoints = {
@@ -20,7 +20,8 @@ export const endpoints = {
     ArticleApi: `${BASE_URL}/admin/articles`,
     NewsApi: `${BASE_URL}/admin/news`,
     CategoryApi: `${BASE_URL}/admin/categories`,
-    AdminQuoteApi: `${BASE_URL}/admin/quotes`
+    AdminQuoteApi: `${BASE_URL}/admin/quotes`,
+    AdminCustomerApi: `${BASE_URL}/admin/become-customer`
 
 
 

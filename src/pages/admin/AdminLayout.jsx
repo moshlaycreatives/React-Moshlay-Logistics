@@ -15,7 +15,7 @@ export default function AdminLayout() {
     <div className="admin admin-layout">
       <aside className="admin-sidebar">
         <div className="admin-sidebar__brand">
-          <h2>NTS Admin</h2>
+          <h2>Logistics Admin</h2>
           <span>Content Manager</span>
         </div>
 
@@ -28,6 +28,18 @@ export default function AdminLayout() {
             className={({ isActive }) => (isActive ? "is-active" : "")}
           >
             Articles
+          </NavLink>
+          <NavLink
+            to="/admin/customers"
+            className={({ isActive }) => (isActive ? "is-active" : "")}
+          >
+            Become Customer
+          </NavLink>
+          <NavLink
+            to="/admin/quotes"
+            className={({ isActive }) => (isActive ? "is-active" : "")}
+          >
+            Request Quote
           </NavLink>
         </nav>
 
