@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import ImageUploadField from "../../components/admin/ImageUploadField";
+import RichTextEditor from "../../components/admin/RichTextEditor";
 import { endpoints, BASE_URL } from "../../endpoint";
 
 function getAuthHeaders() {
@@ -251,16 +252,13 @@ export default function AdminEditArticle() {
                 required={false}
               />
 
-              <div className="admin-form__group">
-                <label htmlFor="content">Full Content *</label>
-                <textarea
-                  id="content"
-                  value={form.content}
-                  onChange={update("content")}
-                  placeholder="Write your article content here. Separate paragraphs with a blank line."
-                  required
-                />
-              </div>
+              <RichTextEditor
+                id="content"
+                label="Full Content *"
+                value={form.content}
+                onChange={(content) => setForm((prev) => ({ ...prev, content }))}
+                required
+              />
 
               <div className="admin-form__group">
                 <label className="admin-form__check">

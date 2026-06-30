@@ -47,11 +47,11 @@
 
 .admin-form__group label {
   display: block;
-  font-size: 0.82rem;
+  font-size: 0.90rem;
   font-weight: 600;
   color: var(--ink-2);
   margin-bottom: 6px;
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
   letter-spacing: 0.06em;
 }
 
@@ -81,6 +81,100 @@
   min-height: 160px;
   resize: vertical;
   line-height: 1.55;
+}
+
+.admin-rich-editor__wrap {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--white);
+  overflow: hidden;
+  transition: border-color 0.2s var(--ease);
+}
+
+.admin-rich-editor__wrap:focus-within {
+  border-color: var(--navy-500);
+  box-shadow: 0 0 0 3px rgba(35, 74, 102, 0.12);
+}
+
+.admin-rich-editor .ql-toolbar.ql-snow {
+  border: none;
+  border-bottom: 1px solid var(--line);
+  background: #f8fafc;
+  padding: 10px 12px;
+  font-family: inherit;
+}
+
+.admin-rich-editor .ql-container.ql-snow {
+  border: none;
+  font-family: inherit;
+  font-size: 0.95rem;
+}
+
+.admin-rich-editor .ql-editor {
+  min-height: var(--editor-min-height, 280px);
+  line-height: 1.6;
+  color: var(--ink);
+  padding: 16px 18px;
+}
+
+.admin-rich-editor .ql-editor.ql-blank::before {
+  color: var(--muted);
+  font-style: normal;
+  left: 18px;
+  right: 18px;
+}
+
+.admin-rich-editor .ql-editor img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius-sm);
+  margin: 8px 0;
+}
+
+.admin-rich-editor .ql-snow .ql-picker {
+  color: var(--ink-2);
+}
+
+.admin-rich-editor .ql-snow .ql-stroke {
+  stroke: var(--ink-2);
+}
+
+.admin-rich-editor .ql-snow .ql-fill {
+  fill: var(--ink-2);
+}
+
+.admin-rich-editor .ql-snow .ql-picker-options {
+  background: var(--white);
+  border-color: var(--line);
+}
+
+.admin-rich-editor .ql-snow.ql-toolbar button:hover,
+.admin-rich-editor .ql-snow .ql-toolbar button:hover,
+.admin-rich-editor .ql-snow.ql-toolbar button.ql-active,
+.admin-rich-editor .ql-snow .ql-toolbar button.ql-active {
+  color: var(--navy-700);
+}
+
+.admin-rich-editor .ql-snow.ql-toolbar button:hover .ql-stroke,
+.admin-rich-editor .ql-snow .ql-toolbar button:hover .ql-stroke,
+.admin-rich-editor .ql-snow.ql-toolbar button.ql-active .ql-stroke,
+.admin-rich-editor .ql-snow .ql-toolbar button.ql-active .ql-stroke {
+  stroke: var(--navy-700);
+}
+
+.admin-rich-editor .ql-snow.ql-toolbar button:hover .ql-fill,
+.admin-rich-editor .ql-snow .ql-toolbar button:hover .ql-fill,
+.admin-rich-editor .ql-snow.ql-toolbar button.ql-active .ql-fill,
+.admin-rich-editor .ql-snow .ql-toolbar button.ql-active .ql-fill {
+  fill: var(--navy-700);
+}
+
+.admin-rich-editor__validator {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+  height: 0;
+  width: 0;
 }
 
 .admin-form__hint {

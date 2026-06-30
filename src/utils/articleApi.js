@@ -5,6 +5,10 @@ function parseFeatured(value) {
   return value === true || value === 1 || value === "1" || value === "true";
 }
 
+function isHtmlContent(content) {
+  return /<[a-z][\s\S]*>/i.test(content ?? "");
+}
+
 function contentToParagraphs(content) {
   const paragraphs = (content ?? "")
     .replace(/\r\n/g, "\n")
@@ -80,7 +84,11 @@ export function normalizeArticleDetail(data) {
     meta: article.meta ?? "",
     image: resolveApiImage(article.image ?? article.image_url ?? article.cover_image),
     category,
-    paragraphs: contentToParagraphs(article.content),
+    content: article.content ?? "",
+    isHtml: isHtmlContent(article.content),
+    paragraphs: isHtmlContent(article.content)
+      ? []
+      : contentToParagraphs(article.content),
     prevLink: null,
     nextLink: null,
     hasCtaBand:

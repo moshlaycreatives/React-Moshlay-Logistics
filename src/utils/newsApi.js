@@ -13,6 +13,10 @@ export function resolveApiImage(image) {
   return image;
 }
 
+function isHtmlContent(content) {
+  return /<[a-z][\s\S]*>/i.test(content ?? "");
+}
+
 function contentToParagraphs(content) {
   const paragraphs = (content ?? "")
     .replace(/\r\n/g, "\n")
@@ -74,7 +78,11 @@ export function normalizeNewsDetail(data) {
     description: news.description ?? news.excerpt ?? "",
     meta: news.meta ?? "",
     image: resolveApiImage(news.image ?? news.image_url ?? news.cover_image),
-    paragraphs: contentToParagraphs(news.content),
+    content: news.content ?? "",
+    isHtml: isHtmlContent(news.content),
+    paragraphs: isHtmlContent(news.content)
+      ? []
+      : contentToParagraphs(news.content),
     prevLink: null,
     nextLink: null,
     hasCtaBand: false,

@@ -1,11 +1,38 @@
+import { useState } from "react";
+import axios from "axios";
 import { usePageTitle } from "../hooks/usePageTitle";
 import { Link } from "react-router-dom";
 import DemoForm from "../components/DemoForm";
 import LinkedInBanner from "../components/LinkedInBanner";
+import { endpoints } from "../endpoint";
+
+const initialFormData = {
+  first_name: "",
+  last_name: "",
+  phone: "",
+  email: "",
+  business_name: "",
+  shipping_frequency: "",
+  message: "",
+  consent: false,
+};
 
 export default function BecomeACustomer() {
   usePageTitle("Become a Customer | Nationwide Transport Services", "Ship often or move large quantities? Apply for a Nationwide Transport Services line of transport credit and switch to simple monthly billing.");
 
+  const [formData, setformData] = useState(initialFormData);
+
+  function update(field) {
+    return (e) => {
+      const value = e.target.type === "checkbox" ? e.target.checked : e.target.value;
+      setformData((prev) => ({ ...prev, [field]: value }));
+    };
+  }
+
+  async function handleSubmit() {
+    await axios.post(endpoints.CustomerApi, formData);
+    setformData(initialFormData);
+  }
   return (
     <>
 
@@ -77,24 +104,25 @@ export default function BecomeACustomer() {
             className="cform reveal"
             style={{ maxWidth: "760px", marginInline: "auto" }}
             noteText="Thanks! Your application has been received — a specialist will reach out shortly."
+            onSubmit={handleSubmit}
           >
             <div className="row">
-              <div className="field-group"><label htmlFor="fname">First Name</label><input id="fname" type="text" placeholder="Enter first name" required /></div>
-              <div className="field-group"><label htmlFor="lname">Last Name</label><input id="lname" placeholder="Enter last name" type="text" required /></div>
+              <div className="field-group"><label htmlFor="fname">First Name</label><input id="fname" type="text" placeholder="Enter first name" value={formData.first_name} onChange={update("first_name")} required /></div>
+              <div className="field-group"><label htmlFor="lname">Last Name</label><input id="lname" placeholder="Enter last name" type="text" value={formData.last_name} onChange={update("last_name")} required /></div>
             </div>
             <div className="row">
-              <div className="field-group"><label htmlFor="phone">Phone</label><input id="phone" type="tel" placeholder="(000) 000-0000" required /></div>
-              <div className="field-group"><label htmlFor="email">Email</label><input id="email" type="email" placeholder="you@company.com" required /></div>
+              <div className="field-group"><label htmlFor="phone">Phone</label><input id="phone" type="tel" placeholder="(000) 000-0000" value={formData.phone} onChange={update("phone")} required /></div>
+              <div className="field-group"><label htmlFor="email">Email</label><input id="email" type="email" placeholder="you@company.com" value={formData.email} onChange={update("email")} required /></div>
             </div>
             <div className="row">
-              <div className="field-group"><label htmlFor="biz">Business Name</label><input id="biz" type="text" placeholder="Enter business name" /></div>
+              <div className="field-group"><label htmlFor="biz">Business Name</label><input id="biz" type="text" placeholder="Enter business name" value={formData.business_name} onChange={update("business_name")} /></div>
               <div className="field-group"><label htmlFor="freq">Shipping Frequency</label>
-                <input list="freqs" id="freq" placeholder="Select or type" />
+                <input list="freqs" id="freq" placeholder="Select or type" value={formData.shipping_frequency} onChange={update("shipping_frequency")} />
                 <datalist id="freqs"><option>Single Shipment</option><option>Once a Month</option><option>Once a Week</option><option>Multiple Times a Week</option></datalist>
               </div>
             </div>
-            <div className="field-group"><label htmlFor="msg">Message</label><textarea id="msg" placeholder="Tell us about your typical shipments…"></textarea></div>
-            <label className="consent"><input type="checkbox" required /><span>By submitting this form, I consent to be contacted by Nationwide Transport Services regarding my application. Message and data rates may apply.</span></label>
+            <div className="field-group"><label htmlFor="msg">Message</label><textarea id="msg" placeholder="Tell us about your typical shipments…" value={formData.message} onChange={update("message")}></textarea></div>
+            <label className="consent"><input type="checkbox" checked={formData.consent} onChange={update("consent")} required /><span>By submitting this form, I consent to be contacted by Nationwide Transport Services regarding my application. Message and data rates may apply.</span></label>
             <button className="btn btn--amber" type="submit">Submit Application
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
             </button>

@@ -4,6 +4,7 @@ import { Icon } from "./icons";
 import LinkedInBanner from "./LinkedInBanner";
 import { usePageTitle } from "../hooks/usePageTitle";
 import { resolveImageSrc } from "../utils/imageUpload";
+import { cleanRichContentHtml } from "../utils/richContent";
 
 export default function ArticlePage({
   articles,
@@ -45,13 +46,22 @@ export default function ArticlePage({
             alt={article.title}
           />
           <div className="article__body">
-            {article.paragraphs.map((p, i) => (
-              <p key={i}>{p}</p>
-            ))}
-            {showPlaceholder && (
-              <p style={{ color: "var(--muted)", fontSize: ".92rem", marginTop: 28 }}>
-                <em>This article content is placeholder text and can be replaced with your final copy.</em>
-              </p>
+            {article.isHtml ? (
+              <div
+                className="article__rich-content"
+                dangerouslySetInnerHTML={{ __html: cleanRichContentHtml(article.content) }}
+              />
+            ) : (
+              <>
+                {article.paragraphs.map((p, i) => (
+                  <p key={i}>{p}</p>
+                ))}
+                {showPlaceholder && (
+                  <p style={{ color: "var(--muted)", fontSize: ".92rem", marginTop: 28 }}>
+                    <em>This article content is placeholder text and can be replaced with your final copy.</em>
+                  </p>
+                )}
+              </>
             )}
           </div>
           <div style={{ marginTop: 34, display: "flex", gap: 12, flexWrap: "wrap" }}>
